@@ -1,0 +1,30 @@
+<p>show-user works!</p>
+
+<button type="button" class="btn btn-primary">ADD</button>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">ชื่อ-สกุล</th>
+      <th scope="col">ที่อยู่</th>
+      <th scope="col">วันเกิด</th>
+      <th scope="col">อายุ</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of userList(); track item.id) {
+      <tr>
+        <th scope="row">{{ item.id }}</th>
+        <td>{{ item.firstname + ' ' + item.lastname }}</td>
+        <td>{{ item.address }}</td>
+        <td>{{ item.birthDate }}</td>
+        <td>{{ item.age }}</td>
+        <td>
+          <button type="button" class="btn btn-sm btn-outline-primary">View</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
