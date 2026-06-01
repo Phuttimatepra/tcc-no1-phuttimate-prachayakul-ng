@@ -26,7 +26,7 @@ export class ShowUser implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
         this.userList.set(res);
-        console.log(res);
+        console.log(this.userList()[0].birthdate);
       });
   }
 }
