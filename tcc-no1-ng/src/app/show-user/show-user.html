@@ -3,11 +3,18 @@
 <div class="container">
   <div class="row">
     <div class="d-flex justify-content-end">
-      <button type="button" class="btn btn-primary">ADD</button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="openCreateModal()"
+        data-bs-toggle="modal"
+        data-bs-target="#addModal"
+      >
+        ADD
+      </button>
     </div>
   </div>
 </div>
-
 
 <table class="table">
   <thead>
@@ -29,9 +36,108 @@
         <td>{{ item.birthdate | date: 'dd/MM/yyyy' }}</td>
         <td>{{ item.age }}</td>
         <td>
-          <button type="button" class="btn btn-sm btn-outline-primary">View</button>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-primary"
+            (click)="openViewModal(item)"
+            data-bs-toggle="modal"
+            data-bs-target="#viewModal"
+          >
+            View
+          </button>
         </td>
       </tr>
     }
   </tbody>
 </table>
+
+<!-- View Modal -->
+<div
+  class="modal fade"
+  id="viewModal"
+  tabindex="-1"
+  aria-labelledby="viewModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      @if (selectedUser()) {
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-4">ชื่อ - สกุล</div>
+              <div class="col-md-8">
+                {{ selectedUser()?.firstname }} {{ selectedUser()?.lastname }}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">วันเกิด</div>
+              <div class="col-md-8">{{ selectedUser()?.birthdate | date: 'dd/MM/yyyy' }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">อายุ</div>
+              <div class="col-md-8">{{ selectedUser()?.age }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">ที่อยู่</div>
+              <div class="col-md-8">{{ selectedUser()?.address }}</div>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <div class="modal-body">Loading...</div>
+      }
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div
+  class="modal fade"
+  id="addModal"
+  tabindex="-1"
+  aria-labelledby="addModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <div class="modal-body">
+          <form #userForm="ngForm" (ngSubmit)="saveUser(userForm)">
+            <div class="mb-3">
+              <label for="firstname" class="form-label">ชื่อ</label>
+              <input type="text" ngModel name="firstname" class="form-control" id="firstname" />
+            </div>
+            <div class="mb-3">
+              <label for="lastname" class="form-label">สกุล</label>
+              <input type="text" ngModel name="lastname" class="form-control" id="lastname" />
+            </div>
+            <div class="mb-3">
+              <label for="birthdate" class="form-label">วันเกิด</label>
+              <input type="date" ngModel name="birthdate" class="form-control" id="birthdate" placeholder="dd/MM/yyyy" />
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">ที่อยู่</label>
+              <input type="text" ngModel name="address" class="form-control" id="address" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>

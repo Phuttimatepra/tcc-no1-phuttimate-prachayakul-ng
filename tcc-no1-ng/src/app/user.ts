@@ -13,4 +13,8 @@ export class User {
   getData(){
     return this._http.get<any[]>(this.base_url + '/users');
   }
+
+  createUser(data: any) {
+    return this._http.post(this.base_url + '/users', data);
+  }
 }
